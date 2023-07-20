@@ -12,15 +12,10 @@ import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInC
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
-public class UserTest {
+public class UserTest extends BaseTest  {
 	String userName = "morpheus";
 	String newJob = "zion resident";
 	String job = "leader";
-
-	@BeforeAll
-	static public void setup() {
-		RestAssured.baseURI = "https://reqres.in/api";
-	}
 
 	@Test
 	public void createUser() {
@@ -32,7 +27,7 @@ public class UserTest {
 				.when()
 				.contentType(JSON)
 				.body(newUser)
-				.post("/users/2")
+				.post("api/users/2")
 				.then()
 				.log()
 				.all()
@@ -57,7 +52,7 @@ public class UserTest {
 				.when()
 				.contentType(JSON)
 				.body(newUser)
-				.put("/users/2")
+				.put("api/users/2")
 				.then()
 				.log()
 				.all()
@@ -79,7 +74,7 @@ public class UserTest {
 				.all()
 				.when()
 				.contentType(JSON)
-				.delete("/users/2")
+				.delete("api/users/2")
 				.then()
 				.log()
 				.all()
@@ -94,7 +89,7 @@ public class UserTest {
 				.all()
 				.when()
 				.contentType(JSON)
-				.get("/users/23")
+				.get("api/users/23")
 				.then()
 				.log()
 				.all()
@@ -110,7 +105,7 @@ public class UserTest {
 				.all()
 				.when()
 				.contentType(JSON)
-				.get("/users?page=2")
+				.get("api/users?page=2")
 				.then()
 				.log()
 				.all()

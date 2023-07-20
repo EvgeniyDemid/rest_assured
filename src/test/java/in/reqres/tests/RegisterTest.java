@@ -2,21 +2,15 @@ package in.reqres.tests;
 
 import io.restassured.RestAssured;
 import org.json.simple.JSONObject;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.hasItems;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class RegisterTest {
+public class RegisterTest extends BaseTest {
 	String email = "eve.holt@reqres.in";
 	String password = "cityslicka";
-
-	@BeforeAll
-	static public void setup() {
-		RestAssured.baseURI = "https://reqres.in";
-	}
 
 	@Test
 	public void login() {

@@ -1,20 +1,13 @@
 package in.reqres.tests;
 
-import in.reqres.pojo.User.UserReq;
-import in.reqres.pojo.User.UserRes;
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
 import static io.restassured.http.ContentType.JSON;
 import static org.hamcrest.Matchers.equalTo;
 
 
-public class ResourceTest {
-	@BeforeAll
-	static public void setup() {
-		RestAssured.baseURI = "https://reqres.in";
-	}
+public class ResourceTest extends BaseTest {
 
 	@Test
 	public void listResource() {
