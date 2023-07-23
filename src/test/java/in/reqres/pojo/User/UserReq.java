@@ -1,13 +1,12 @@
 package in.reqres.pojo.User;
 
 import lombok.AllArgsConstructor;
+import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
 
 @AllArgsConstructor
-@Getter
-@Setter
+@Data
 public class UserReq {
-	public String name;
-	public String job;
+    public String name, job;
 }
