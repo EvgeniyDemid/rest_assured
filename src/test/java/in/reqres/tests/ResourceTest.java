@@ -1,5 +1,6 @@
 package in.reqres.tests;
 
+import in.reqres.pojo.resource.ResourceListReq;
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.Test;
 
@@ -8,23 +9,35 @@ import static in.reqres.specs.ResourceSpec.*;
 import static io.qameta.allure.Allure.step;
 import static io.restassured.module.jsv.JsonSchemaValidator.matchesJsonSchemaInClasspath;
 import static org.hamcrest.Matchers.equalTo;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 public class ResourceTest {
 
 	@Test
 	public void listResource() {
-		step("Make request", () -> {
+		ResourceListReq listResource =	step("Make request", () ->
 			RestAssured
 					.given(requestSpec)
 					.get("/unknown")
 					.then()
 					.spec(resourceListResponseSpec)
 					.body(matchesJsonSchemaInClasspath("schemas/resource-list-schema.json"))
-					.body("page", equalTo(1))
-					.body("per_page", equalTo(6))
-					.body("total", equalTo(12))
-					.body("total_pages", equalTo(2));
+					.extract()
+					.response()
+					.as(ResourceListReq.class));
+		step("Check response", () -> {
+			assertEquals(listResource.getPage(),1);
+			assertEquals(listResource.getPerPage(),6);
+			assertEquals(listResource.getTotal(),12);
+			assertEquals(listResource.getTotalPages(),2);
+			assertEquals(listResource.getData().get(0).getId(),1);
+			assertEquals(listResource.getData().get(0).getName(),"cerulean");
+			assertEquals(listResource.getData().get(0).getYear(),2000);
+			assertEquals(listResource.getData().get(0).getColor(),"#98B2D1");
+			assertEquals(listResource.getData().get(0).getPantoneValue(),"15-4020");
+			assertEquals(listResource.getSupport().getUrl(),"https://reqres.in/#support-heading");
+			assertEquals(listResource.getSupport().getText(),"To keep ReqRes free, contributions towards server costs are appreciated!");
 		});
 	}
 
